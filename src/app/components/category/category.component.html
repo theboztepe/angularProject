@@ -1,0 +1,6 @@
+<div class="spinner-border text-danger" role="status" *ngIf="!categoryLoaded">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<ul class="list-group" *ngIf="categoryLoaded">
+  <li class="list-group-item nav-link" *ngFor="let category of categories" value="{{category.categoryId}}">{{category.categoryName}}</li>
+</ul>
