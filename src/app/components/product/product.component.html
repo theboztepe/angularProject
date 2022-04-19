@@ -30,15 +30,27 @@
       <th>Fiyat</th>
       <th>KDV'li Fiyat</th>
       <th>Stok</th>
+      <th>İşlemler</th>
     </tr>
   </thead>
-  <tr *ngFor="let product of products | filterPipe: filterText">
-    <td>{{ product.productId }}</td>
-    <td>{{ product.productName | uppercase }}</td>
-    <td>{{ product.categoryId }}</td>
-    <td>{{ product.unitPrice | currency }}</td>
-    <td>{{ product.unitPrice | vatAdded: 10 | currency }}</td>
+  <tbody>
     <!-- | -> pipe. parametre  -->
-    <td>{{ product.unitsInStock }}</td>
-  </tr>
+    <tr *ngFor="let product of products | filterPipe: filterText">
+      <td>{{ product.productId }}</td>
+      <td>{{ product.productName | uppercase }}</td>
+      <td>{{ product.categoryId }}</td>
+      <td>{{ product.unitPrice | currency }}</td>
+      <td>{{ product.unitPrice | vatAdded: 10 | currency }}</td>
+      <td>{{ product.unitsInStock }}</td>
+      <td>
+        <button
+          (click)="addToCart(product)"
+          type="button"
+          class="btn btn-success btn-sm"
+        >
+          Sepete Ekle
+        </button>
+      </td>
+    </tr>
+  </tbody>
 </table>
