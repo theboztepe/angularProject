@@ -26,5 +26,5 @@
   *ngIf="currentCategory"
   style="margin-top: 10px"
 >
-  {{ currentCategory.categoryName }} seçildi!
+  {{ currentCategory.categoryName.length > 0 ? currentCategory.categoryName :"Tüm ürünler" }} seçildi!
 </div>
