@@ -14,11 +14,11 @@ export class CategoryComponent implements OnInit {
   constructor(private productService: CategoryService) {}
 
   ngOnInit(): void { //başlangıçta çalışır
-    this.getProducts();
+    this.getCategories();
   }
 
-  getProducts() { //data alma
-    this.productService.getCategorys().subscribe((response) => {
+  getCategories() { //data alma
+    this.productService.getCategories().subscribe((response) => {
       this.categories = response.data;
       this.categoryLoaded = true;
     });

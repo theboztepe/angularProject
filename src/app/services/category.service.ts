@@ -11,7 +11,7 @@ export class CategoryService {
   apiUrl: string = 'https://localhost:44314/api/categories/getall';
   constructor(private httpClient: HttpClient) {}
 
-  getCategorys(): Observable<ListResponseModel<Category>> {
+  getCategories(): Observable<ListResponseModel<Category>> {
     return this.httpClient.get<ListResponseModel<Category>>(this.apiUrl);
   }
 }
