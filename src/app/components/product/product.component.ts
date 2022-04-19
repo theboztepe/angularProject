@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductComponent implements OnInit {
   products: Product[] = [];
   productLoaded: boolean = false;
+  filterText = '';
   constructor(
     private productService: ProductService,
     private activatedRoute: ActivatedRoute
@@ -18,8 +19,10 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     //başlangıçta çalışır
-    this.activatedRoute.params.subscribe((params) => {//route bilgilerine göre işlem yapacak
-      if (params['categoryId']) {//categoryId si varsa
+    this.activatedRoute.params.subscribe((params) => {
+      //route bilgilerine göre işlem yapacak
+      if (params['categoryId']) {
+        //categoryId si varsa
         this.getProductsByCategory(params['categoryId']);
       } else {
         this.getProducts();

@@ -1,6 +1,26 @@
 <div class="spinner-border text-primary" role="status" *ngIf="!productLoaded">
   <span class="visually-hidden">Loading...</span>
 </div>
+<div class="mb-3" *ngIf="productLoaded">
+  <label for="filterText" class="form-label" style="font-weight: bolder"
+    >Ürün Ara</label
+  >
+  <input
+    type="text"
+    [(ngModel)]="filterText"
+    class="form-control"
+    id="filterText"
+    placeholder="Ara..."
+  />
+</div>
+<div
+  class="alert alert-info"
+  role="alert"
+  *ngIf="filterText"
+  style="margin-top: 10px"
+>
+  {{ filterText }} aradınız...
+</div>
 <table class="table table-bordered" *ngIf="productLoaded">
   <thead>
     <tr>
@@ -8,14 +28,17 @@
       <th>Ad</th>
       <th>Kategori No</th>
       <th>Fiyat</th>
+      <th>KDV'li Fiyat</th>
       <th>Stok</th>
     </tr>
   </thead>
-  <tr *ngFor="let product of products">
-    <td>{{product.productId}}</td>
-    <td>{{product.productName}}</td>
-    <td>{{product.categoryId}}</td>
-    <td>{{product.unitPrice}}</td>
-    <td>{{product.unitsInStock}}</td>
+  <tr *ngFor="let product of products | filterPipe: filterText">
+    <td>{{ product.productId }}</td>
+    <td>{{ product.productName | uppercase }}</td>
+    <td>{{ product.categoryId }}</td>
+    <td>{{ product.unitPrice | currency }}</td>
+    <td>{{ product.unitPrice | vatAdded: 10 | currency }}</td>
+    <!-- | -> pipe. parametre  -->
+    <td>{{ product.unitsInStock }}</td>
   </tr>
 </table>
