@@ -1,7 +1,8 @@
+import { Category } from './../models/category';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CategoryResponseModel } from '../models/categoryResponseModel';
+import { ListResponseModel } from '../models/listResponseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class CategoryService {
   apiUrl: string = 'https://localhost:44335/api/categories/getall';
   constructor(private httpClient: HttpClient) {}
 
-  getCategorys(): Observable<CategoryResponseModel> {
-    return this.httpClient.get<CategoryResponseModel>(this.apiUrl);
+  getCategorys(): Observable<ListResponseModel<Category>> {
+    return this.httpClient.get<ListResponseModel<Category>>(this.apiUrl);
   }
 }

@@ -2,5 +2,21 @@
   <span class="visually-hidden">Loading...</span>
 </div>
 <ul class="list-group" *ngIf="categoryLoaded">
-  <li class="list-group-item nav-link" *ngFor="let category of categories" value="{{category.categoryId}}">{{category.categoryName}}</li>
+  <li
+    (click)="setCurrentCategory(category)"
+    [class]="getCurrentCategoryClass(category)"
+    *ngFor="let category of categories"
+    value="{{ category.categoryId }}"
+  >
+    {{ category.categoryName }}
+  </li>
 </ul>
+
+<div
+  class="alert alert-primary"
+  role="alert"
+  *ngIf="currentCategory"
+  style="margin-top: 10px"
+>
+  {{ currentCategory.categoryName }} seçildi!
+</div>

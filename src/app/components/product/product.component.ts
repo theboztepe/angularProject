@@ -12,11 +12,11 @@ export class ProductComponent implements OnInit {
   productLoaded:boolean = false;
   constructor(private productService: ProductService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void { //başlangıçta çalışır
     this.getProducts();
   }
 
-  getProducts() {
+  getProducts() { //data alma
     this.productService.getProducts().subscribe((response) => {
       this.products = response.data;
       this.productLoaded = true;
