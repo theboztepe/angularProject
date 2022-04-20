@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cart-summary.component.css'],
 })
 export class CartSummaryComponent implements OnInit {
-  cartItems: CartItem[];
+  cartItems: CartItem[] = JSON.parse(localStorage.getItem("cartItem"));
 
   constructor(private cartService: CartService, private toastrService:ToastrService) {}
 

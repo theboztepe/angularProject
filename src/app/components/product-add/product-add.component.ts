@@ -39,17 +39,30 @@ export class ProductAddComponent implements OnInit {
   addProduct() {
     if (this.productAddForm.valid) {
       let productModel = Object.assign({}, this.productAddForm.value);
-      this.productService.addProduct(productModel).subscribe(response=>{
-        if(response.success){
-          this.toastrService.success(response.message,"Başarılı")
+      this.productService.addProduct(productModel).subscribe(
+        (response) => {
+          if (response.success) {
+            this.toastrService.success(response.message, 'Başarılı');
+          } else {
+            this.toastrService.error(response.message);
+          }
+        },
+        (responseError) => {
+          console.log(responseError.error)
+          if (responseError.error.Errors !== undefined && responseError.error.Errors.length > 0) {
+            for (let i = 0; i < responseError.error.Errors.length; i++) {
+              this.toastrService.error(
+                responseError.error.Errors[i].ErrorMessage
+              );
+            }
+          }
+          else{
+            this.toastrService.error(
+              responseError.message
+            );
+          }
         }
-        else{
-          this.toastrService.error(response.message);
-        }
-      },responseError=>{
-        console.log(responseError.error)
-        this.toastrService.error(responseError.error.Message);
-      })
+      );
     } else {
       this.toastrService.error('Eksik bilgi!');
     }

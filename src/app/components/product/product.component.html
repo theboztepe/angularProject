@@ -1,56 +1,92 @@
-<div class="spinner-border text-primary" role="status" *ngIf="!productLoaded">
-  <span class="visually-hidden">Loading...</span>
+<div class="row">
+  <div class="col-xl-3 col-lg-3 col-md-3 col-12">
+    <div class="spinner-border text-danger" role="status" *ngIf="!categoryLoaded">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <ul class="list-group" *ngIf="categoryLoaded">
+      <li
+        routerLink="/products"
+        (click)="setAllCategory()"
+        [class]="getAllCategoryClass()"
+      >
+        Tüm Ürünler
+      </li>
+      <li
+        (click)="setCurrentCategory(category)"
+        routerLink="/products/category/{{ category.categoryId }}"
+        [class]="getCurrentCategoryClass(category)"
+        *ngFor="let category of categories"
+        value="{{ category.categoryId }}"
+      >
+        {{ category.categoryName }}
+      </li>
+    </ul>
+
+    <div
+      class="alert alert-primary"
+      role="alert"
+      *ngIf="currentCategory"
+      style="margin-top: 10px"
+    >
+      {{ currentCategory.categoryName.length > 0 ? currentCategory.categoryName :"Tüm ürünler" }} seçildi!
+    </div>
+  </div>
+  <div class="col-xl-9 col-lg-9 col-md-9 col-12">
+    <div class="spinner-border text-primary" role="status" *ngIf="!productLoaded">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="mb-3" *ngIf="productLoaded">
+      <label for="filterText" class="form-label" style="font-weight: bolder"
+        >Ürün Ara</label
+      >
+      <input
+        type="text"
+        [(ngModel)]="filterText"
+        class="form-control"
+        id="filterText"
+        placeholder="Ara..."
+      />
+    </div>
+    <div
+      class="alert alert-info"
+      role="alert"
+      *ngIf="filterText"
+      style="margin-top: 10px"
+    >
+      {{ filterText }} aradınız...
+    </div>
+    <table class="table table-bordered" *ngIf="productLoaded">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Ad</th>
+          <th>Kategori No</th>
+          <th>Fiyat</th>
+          <th>KDV'li Fiyat</th>
+          <th>Stok</th>
+          <th>İşlemler</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- | -> pipe. parametre  -->
+        <tr *ngFor="let product of products | filterPipe: filterText">
+          <td>{{ product.productId }}</td>
+          <td>{{ product.productName | uppercase }}</td>
+          <td>{{ product.categoryId }}</td>
+          <td>{{ product.unitPrice | currency }}</td>
+          <td>{{ product.unitPrice | vatAdded: 10 | currency }}</td>
+          <td>{{ product.unitsInStock }}</td>
+          <td>
+            <button
+              (click)="addToCart(product)"
+              type="button"
+              class="btn btn-success btn-sm"
+            >
+              Sepete Ekle
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-<div class="mb-3" *ngIf="productLoaded">
-  <label for="filterText" class="form-label" style="font-weight: bolder"
-    >Ürün Ara</label
-  >
-  <input
-    type="text"
-    [(ngModel)]="filterText"
-    class="form-control"
-    id="filterText"
-    placeholder="Ara..."
-  />
-</div>
-<div
-  class="alert alert-info"
-  role="alert"
-  *ngIf="filterText"
-  style="margin-top: 10px"
->
-  {{ filterText }} aradınız...
-</div>
-<table class="table table-bordered" *ngIf="productLoaded">
-  <thead>
-    <tr>
-      <th>No</th>
-      <th>Ad</th>
-      <th>Kategori No</th>
-      <th>Fiyat</th>
-      <th>KDV'li Fiyat</th>
-      <th>Stok</th>
-      <th>İşlemler</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- | -> pipe. parametre  -->
-    <tr *ngFor="let product of products | filterPipe: filterText">
-      <td>{{ product.productId }}</td>
-      <td>{{ product.productName | uppercase }}</td>
-      <td>{{ product.categoryId }}</td>
-      <td>{{ product.unitPrice | currency }}</td>
-      <td>{{ product.unitPrice | vatAdded: 10 | currency }}</td>
-      <td>{{ product.unitsInStock }}</td>
-      <td>
-        <button
-          (click)="addToCart(product)"
-          type="button"
-          class="btn btn-success btn-sm"
-        >
-          Sepete Ekle
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
